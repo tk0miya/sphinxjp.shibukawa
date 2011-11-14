@@ -66,7 +66,7 @@ def parse(seq):
     date = some(lambda t: t.type == 'Date').named('date') >> tokval
     make_node = lambda args: Node(*args)
 
-    node_stmt = id + op_(':') + date + op_('-') + date >> make_node
+    node_stmt = id + op_(':') + date + maybe(op_('-') + date) >> make_node
     chart = (
         many(node_stmt + skip(maybe(op(';'))))
         >> Chart)
@@ -126,7 +126,10 @@ class _Node(object):
     def __init__(self, obj):
         self.label = obj.id
         self.starts = str2date(obj.starts)
-        self.ends = str2date(obj.ends)
+        if obj.ends:
+            self.ends = str2date(obj.ends)
+        else:
+            self.ends = self.starts
 
         if self.starts > self.ends:
             raise AttributeError('caught starts > ends: %s' % self.label)
