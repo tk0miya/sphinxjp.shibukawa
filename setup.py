@@ -16,6 +16,7 @@ Following code is sample::
       item2: 10/4 - 10/6
       item3: 10/5 - 10/7
 
+See more examples and output images in http://packages.python.org/sphinxjp.shibukawa/ .
 
 This module needs internet connection.
 
