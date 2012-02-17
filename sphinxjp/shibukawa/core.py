@@ -35,7 +35,8 @@ class Schedule(object):
         xaxis = []
         min = schedule.min
         for i in range(schedule.days):
-            xaxis.append((min + timedelta(days=i)).strftime('%0m/%0d'))
+            date = min + timedelta(days=i)
+            xaxis.append("%02d/%02d" % (date.month, date.day))
         params['chxl'] = "0:|%s|1:|%s" % ("|".join(xaxis), "|".join(n.label for n in schedule.items))
 
         params['chd'] = "t:%s|%s" % (",".join(str(schedule.far_to(n)) for n in schedule.items),
