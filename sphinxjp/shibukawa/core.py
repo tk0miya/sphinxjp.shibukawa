@@ -31,12 +31,19 @@ class Schedule(object):
         params['chds'] = "0,%d" % schedule.days
         params['chs'] = self.options.get('size', '480x%d' % (40 * (len(schedule.items) + 1)))
 
+        interval = self.options.get('interval', None)
+        if interval:
+            schedule.interval = interval
+
         from datetime import timedelta
         xaxis = []
         min = schedule.min
-        for i in range(schedule.days):
-            date = min + timedelta(days=i)
-            xaxis.append("%02d/%02d" % (date.month, date.day))
+        for i in range(0, schedule.days):
+            if i % schedule.interval == 0 or i == (schedule.days - 1):
+                date = min + timedelta(days=i)
+                xaxis.append("%02d/%02d" % (date.month, date.day))
+            else:
+                xaxis.append("")
         params['chxl'] = "0:|%s|1:|%s" % ("|".join(xaxis), "|".join(n.label for n in reversed(schedule.items)))
 
         params['chd'] = "t:%s|%s" % (",".join(str(schedule.far_to(n)) for n in schedule.items),

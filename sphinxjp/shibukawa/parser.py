@@ -102,6 +102,7 @@ def str2date(date):
 class Schedule(object):
     def __init__(self):
         self.items = []
+        self.interval = 1
 
     def append(self, node):
         self.items.append(_Node(node))

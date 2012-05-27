@@ -49,6 +49,7 @@ class Schedule(Directive):
     final_argument_whitespace = False
     option_spec = {
         'size': directives.unchanged,
+        'interval': directives.positive_int,
     }
 
     codeheadings = None
@@ -72,6 +73,8 @@ class Schedule(Directive):
         node['options'] = {}
         if 'size' in self.options:
             node['options']['size'] = self.options['size']
+        if 'interval' in self.options:
+            node['options']['interval'] = self.options['interval']
 
         return [node]
 
@@ -122,7 +125,7 @@ def render_dot_html(self, node, code, options, prefix='schedule',
     try:
         relfn, outfn = get_image_filename(self, code, options, prefix)
         if not os.path.isfile(outfn):
-            core.Schedule(code).save(outfn)
+            core.Schedule(code, **options).save(outfn)
     except ScheduleError, exc:
         self.builder.warn('dot code %r: ' % code + str(exc))
         raise nodes.SkipNode
@@ -148,7 +151,7 @@ def html_visit_schedule(self, node):
 def render_dot_latex(self, node, code, options, prefix='schedule'):
     try:
         fname, outfn = get_image_filename(self, code, options, prefix)
-        core.Schedule(code).save(outfn)
+        core.Schedule(code, **options).save(outfn)
     except ScheduleError, exc:
         self.builder.warn('dot code %r: ' % code + str(exc))
         raise nodes.SkipNode
