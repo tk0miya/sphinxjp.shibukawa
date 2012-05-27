@@ -26,7 +26,7 @@ requires = ['Sphinx>=0.6', 'funcparserlib']
 
 setup(
     name='sphinxjp.shibukawa',
-    version='0.1.1',
+    version='0.1.4',
     url='http://bitbucket.org/tk0miya/',
     download_url='http://pypi.python.org/pypi/sphinxjp.shibukawa',
     license='BSD',
