@@ -26,7 +26,7 @@ Who's shibukawa?
 ================
 
 Yoshiki Shibukawa (@shibukawa) is great Sphinx evangelist in Japan.
-This module is one of present for his birthday (11/14)!
+This module is one of presents for his birthday (11/14)!
 
 Setting
 =======
