@@ -1,5 +1,5 @@
-googlechart extension README
-============================
+sphinxjp.shibukawa extension README
+====================================
 
 This is a sphinx extension which render calendar by using
 `Google Chart <http://code.google.com/intl/ja/apis/chart/>`_ .
@@ -21,6 +21,12 @@ rendered:
    item1: 10/1 - 10/3
    item2: 10/4 - 10/6
    item3: 10/5 - 10/7
+
+Who's shibukawa?
+================
+
+Yoshiki Shibukawa (@shibukawa) is great Sphinx evangelist in Japan.
+This module is one of present for his birthday (11/14)!
 
 Setting
 =======
