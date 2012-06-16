@@ -19,7 +19,7 @@ class Schedule(object):
     @property
     def url(self):
         params = self._url_for_chart()
-        quoted = ("%s=%s" % (k, urllib.quote(v)) for k, v in params.items())
+        quoted = ("%s=%s" % (k, urllib.quote(v.encode('utf-8'))) for k, v in params.items())
         url = self.baseurl + "&".join(quoted)
 
         return url
