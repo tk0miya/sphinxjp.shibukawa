@@ -29,7 +29,7 @@ class Schedule(object):
 
         schedule = parse_string(self.code)
         params['chds'] = "0,%d" % schedule.days
-        params['chs'] = self.options.get('size', '480x%d' % (40 * (len(schedule.items) + 1)))
+        params['chs'] = self.options.get('size', '480x%d' % (27 * (len(schedule.items) + 1)))
 
         interval = self.options.get('interval', None)
         if interval:
