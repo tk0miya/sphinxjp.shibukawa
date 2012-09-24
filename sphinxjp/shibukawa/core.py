@@ -52,13 +52,19 @@ class Schedule(object):
         return params
 
     def save(self, filename):
+        code = None
         try:
             fd = urllib.urlopen(self.url)
 
-            if not hasattr(fd, 'getcode') or fd.getcode() == 200:
+            code = getattr(fd, 'code', None)
+            if code == 200:
                 open(filename, 'wb').write(fd.read())
             else:
                 raise Exception()
         except:
-            msg = "google chart error: a malformed or illegal request"
+            if code == 414:
+                msg = "google chart error: Request URI too long"
+            else:
+                msg = "google chart error: a malformed or illegal request"
+
             raise ScheduleError(msg)
