@@ -101,4 +101,4 @@ Repository
 
 This code is hosted by Bitbucket.
 
-  http://bitbucket.org/tk0miya/
+  https://bitbucket.org/tk0miya/sphinxjp.shibukawa
