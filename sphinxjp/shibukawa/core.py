@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
 import urllib
 from parser import parse_string
 

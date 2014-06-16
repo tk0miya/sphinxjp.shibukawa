@@ -5,8 +5,7 @@ import datetime
 import re
 from re import MULTILINE, DOTALL
 from funcparserlib.lexer import make_tokenizer, Token, LexerError
-from funcparserlib.parser import (some, a, maybe, many, finished, skip,
-    oneplus, forward_decl, NoParseError)
+from funcparserlib.parser import some, a, maybe, many, finished, skip
 
 try:
     from collections import namedtuple
@@ -37,17 +36,18 @@ class ParseException(Exception):
 
 def tokenize(str):
     'str -> Sequence(Token)'
-    specs = [
-        ('Comment', (r'/\*(.|[\r\n])*?\*/', MULTILINE)),
-        ('Comment', (r'//.*',)),
-        ('NL',      (r'[\r\n]+',)),
-        ('Space',   (r'[ \t\r\n]+',)),
-        ('Date',    (r'[0-9]+(/[0-9]+){1,2}',)),
-        ('Name',    (ur'[A-Za-z_\u0080-\uffff][A-Za-z_0-9\.\u0080-\uffff]*',)),
-        ('Op',      (r'[{}():;,\-=\[\]]',)),
-        ('Color',  (r'[A-Za-z0-9]+',)),
-        ('Number',  (r'-?(\.[0-9]+)|([0-9]+(\.[0-9]*)?)',)),
-        ('String',  (r'(?P<quote>"|\').*?(?<!\\)(?P=quote)', DOTALL)),
+    # flake8: NOQA
+    specs = [                                                                    # NOQA
+        ('Comment', (r'/\*(.|[\r\n])*?\*/', MULTILINE)),                         # NOQA
+        ('Comment', (r'//.*',)),                                                 # NOQA
+        ('NL',      (r'[\r\n]+',)),                                              # NOQA
+        ('Space',   (r'[ \t\r\n]+',)),                                           # NOQA
+        ('Date',    (r'[0-9]+(/[0-9]+){1,2}',)),                                 # NOQA
+        ('Name',    (ur'[A-Za-z_\u0080-\uffff][A-Za-z_0-9\.\u0080-\uffff]*',)),  # NOQA
+        ('Op',      (r'[{}():;,\-=\[\]]',)),                                     # NOQA
+        ('Color',  (r'[A-Za-z0-9]+',)),                                          # NOQA
+        ('Number',  (r'-?(\.[0-9]+)|([0-9]+(\.[0-9]*)?)',)),                     # NOQA
+        ('String',  (r'(?P<quote>"|\').*?(?<!\\)(?P=quote)', DOTALL)),           # NOQA
     ]
     useless = ['Comment', 'NL', 'Space']
     t = make_tokenizer(specs)
@@ -56,13 +56,10 @@ def tokenize(str):
 
 def parse(seq):
     'Sequence(Token) -> object'
-    unarg = lambda f: lambda args: f(*args)
     tokval = lambda x: x.value
-    n = lambda s: a(Token('Name', s)) >> tokval
     op = lambda s: a(Token('Op', s)) >> tokval
     op_ = lambda s: skip(op(s))
-    id = some(lambda t:
-        t.type in ['Name', 'Number', 'Color', 'String']).named('id') >> tokval
+    id = some(lambda t: t.type in ['Name', 'Number', 'Color', 'String']).named('id') >> tokval
     date = some(lambda t: t.type == 'Date').named('date') >> tokval
     make_node = lambda args: Node(*args)
 

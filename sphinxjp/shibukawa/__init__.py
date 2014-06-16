@@ -12,7 +12,7 @@
 
 import posixpath
 import os
-import codecs
+import sys
 try:
     from hashlib import sha1 as sha
 except ImportError:
@@ -22,7 +22,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 
 from sphinx.errors import SphinxError
-from sphinx.util.osutil import ensuredir, ENOENT, EPIPE
+from sphinx.util.osutil import ensuredir
 from sphinx.util.compat import Directive
 
 from sphinxjp.shibukawa import core
@@ -121,7 +121,6 @@ def get_image_filename(self, code, options, prefix='schedule'):
 
 def render_dot_html(self, node, code, options, prefix='schedule',
                     imgcls=None, alt=None):
-    has_thumbnail = False
     try:
         relfn, outfn = get_image_filename(self, code, options, prefix)
         if not os.path.isfile(outfn):
